@@ -278,7 +278,7 @@
 </div>
 
 <script>
-  var _u = atob('aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5V1FSQnFmSVU5MHE0RkwwcThtaENtTmxXdjNlNFVhQlRXUjFPRFJYcEFJTnFPUjF2aDBmdkVWVDdWckhYT0l6VjdLdy9leGVj');
+  var _u = 'https://ficha-proxy.marcoscgart.workers.dev';
 
   function previewRef(n) {
     var url = document.getElementById('ref' + n).value.trim();
@@ -339,7 +339,7 @@
 
     fetch(_u, {
       method: 'POST',
-      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(campos)
     })
     .then(function() {
