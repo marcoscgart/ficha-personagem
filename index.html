@@ -332,35 +332,26 @@
       document.body.appendChild(iframe);
     }
 
-    // cria formulário oculto com POST — sem limite de tamanho, sem CORS
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = _u;
-    form.target = 'hidden-iframe';
-    form.style.display = 'none';
-
+    // envia via fetch com JSON
     var campos = Object.assign({}, d, {
       data_envio: new Date().toLocaleString('pt-BR')
     });
 
-    Object.keys(campos).forEach(function(k) {
-      var input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = k;
-      input.value = campos[k] || '';
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-
-    iframe.onload = function() {
+    fetch(_u, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify(campos)
+    })
+    .then(function() {
       btn.disabled = false;
       btn.innerHTML = 'Enviar para Google Sheets';
       showToast('Ficha enviada com sucesso!', 'success');
-      document.body.removeChild(form);
-    };
-
-    form.submit();
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.innerHTML = 'Enviar para Google Sheets';
+      showToast('Erro ao enviar. Tente novamente.', 'error');
+    });
   }
 
   function generatePrompt() {
